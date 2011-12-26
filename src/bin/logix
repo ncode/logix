@@ -28,20 +28,24 @@ fs_match = re.compile("<(.+)>(.*)", re.I)
 class UDPSyslogServer(DatagramProtocol):
     def parseDatagram(self, datagram):
         parsed = {}
-        parsed['line'] = datagram.strip()
-        parsed['id'] = hashlib.sha256(parsed['line'])
         (fac, sev) = self._calc_lvl(parsed['line'])
         parsed['host'] = self.transport.getHost().host
-        parsed['tstamp'] = time.time()
+        parsed['timestamp'] = time.time()
         parsed['facility'] = fac
         parsed['severity'] = sev
+        parsed['version'] = '1.0'
+        parsed['short_message'] = "<%s> %s %s" % (sev, os.uname()[1], datagram.strip())
         self.put(parsed)
 
-    def put(self, parsed):
-        name = config.get('queue')
-        plugin = __import__('', '', name)
-        
-        pass
+    def put(self, payload):
+        from kombu.common import maybe_declare
+        from kombu import BrokerConnection
+        from kombu.pools import producers
+        from kombu import Exchange, Queue
+        connection = BrokerConnection(config.get('amqp','url'))
+        with producers[connection].acquire(block=True) as producer:
+            maybe_declare(Exchange(config.get('amqp','queue'), type="direct"), producer.channel)
+            producer.publish(payload, routing_key="")
 
     def _calc_lvl(self, line):
         lvl = fs_match.split(line)
@@ -59,7 +63,7 @@ class UDPSyslogServer(DatagramProtocol):
 if __name__ == '__main__':
     global config
 
-    config_file = '/etc/logix/enqueuer.cfg'
+    config_file = '/etc/logix/logix.cfg'
     if not os.path.isfile(config_file):
         print "Problem: %s not found" % config_file
         sys.exit(1)
