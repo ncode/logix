@@ -1,0 +1,4 @@
+rewrite using gevent
+- needs tweak on amqp pool
+- would benefit of an internal backlog queue
+
