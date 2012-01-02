@@ -1,0 +1,14 @@
+rewrite using gevent
+- needs tweak on amqp pool
+- would benefit of an internal backlog queue
+
+test on MacOS X:
+
+add this line to /etc/syslog.conf
+
+*.notice;authpriv,remoteauth,ftp,install,internal.none  @127.0.0.1:8000         
+
+restart syslogd:
+
+launchctl unload /System/Library/LaunchDaemons/com.apple.syslogd.plist
+launchctl load /System/Library/LaunchDaemons/com.apple.syslogd.plist
