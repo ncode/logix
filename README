@@ -1,4 +1,7 @@
+Gelf log enqueuer for greylog2
+
 rewrite using gevent
+
 - needs tweak on amqp pool
 - would benefit of an internal backlog queue
 
@@ -12,3 +15,10 @@ restart syslogd:
 
 launchctl unload /System/Library/LaunchDaemons/com.apple.syslogd.plist
 launchctl load /System/Library/LaunchDaemons/com.apple.syslogd.plist
+
+running: 
+
+LOGIX_CONF=src/etc/logix.conf src/bin/logix &
+LOGIX_CONF=src/etc/logix.conf src/bin/consumer.py &
+
+logger test
