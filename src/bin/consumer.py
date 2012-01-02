@@ -14,11 +14,11 @@ if not os.path.isfile(config_file):
 config = ConfigParser.RawConfigParser()
 config.read(config_file)
 
-with BrokerConnection(config.get('amqp','url')) as conn:
-    with conn.SimpleQueue(config.get('amqp', 'queue'), serializer="json",
-            compression="gzip") as queue:
+with BrokerConnection(config.get('transport','url')) as conn:
+    with conn.SimpleQueue(config.get('transport', 'queue'), serializer="json",
+            compression="zlib") as queue:
         message = queue.get(block=True, timeout=10)
         if message:
-            print message
+            print message.payload
             message.ack()
 

@@ -56,8 +56,8 @@ if __name__ == '__main__':
     config = ConfigParser.RawConfigParser()
     config.read(config_file)
 
-    # config.getint('amqp', 'connection_pool_size')
-    connection = BrokerConnection(config.get('amqp','url')) 
+    # config.getint('transport', 'connection_pool_size')
+    connection = BrokerConnection(config.get('transport','url')) 
 
     s = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM, proto=socket.IPPROTO_UDP)
     s.bind(('',config.getint('server', 'port')))
@@ -65,6 +65,6 @@ if __name__ == '__main__':
     while True:
         data, peer = s.recvfrom(config.getint('server', 'max_syslog_line_size'))
         logging.debug("New data: %s" % data)
-        gevent.spawn(parse_and_queue_datagram, data, peer, config.get('amqp',
+        gevent.spawn(parse_and_queue_datagram, data, peer, config.get('transport',
             'queue'), connection)
 
