@@ -24,7 +24,7 @@ facility = ['kern', 'user', 'mail', 'daemon', 'auth', 'syslog', 'lpr', 'news', '
             'cron', 'authpriv', 'ftp', 'ntp', 'audit', 'alert', 'at', 'local0', 'local1', 
             'local2', 'local3', 'local4', 'local5', 'local6', 'local7']
 
-fs_match = re.compile("<(.+)>(.*)", re.I)
+fs_match = re.compile("<(.+)>([A-Z]{3} .*)", re.I)
 
 def parse_and_queue_datagram(line, host, queue, connection):
     parsed = {}
@@ -68,7 +68,7 @@ if __name__ == '__main__':
     s.bind(('',config.getint('server', 'port')))
 
     while True:
-        data, peer = s.recvfrom(config.getint('server', 'max_syslog_line_size'))
+        data, peer = s.recvfrom(config.getint('server', 'max_syslog_line_size') - 1)
         logging.debug("New data: %s" % data)
         gevent.spawn(parse_and_queue_datagram, data, peer, config.get('transport',
             'queue'), connection)
