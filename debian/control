@@ -1,15 +1,13 @@
 Source: logix
-Section: unknown
+Section: python
 Priority: extra
 Maintainer: Juliano Martinez <juliano.martinez@locaweb.com.br>
 Build-Depends: debhelper (>= 7.0.50~)
 Standards-Version: 3.8.4
-Homepage: <insert the upstream URL, if relevant>
-#Vcs-Git: git://git.debian.org/collab-maint/logix.git
-#Vcs-Browser: http://git.debian.org/?p=collab-maint/logix.git;a=summary
+Homepage: https://github.com/locaweb/logix
 
 Package: logix
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: <insert up to 60 chars description>
- <insert long description, indented with spaces>
+Depends: ${shlibs:Depends}, ${misc:Depends}, python-kombu (>= 1.4.3), python-gevent (>= 0.13.6-1.1)
+Description: Syslog to Graylog2 gelf enqueuer 
+ Simple tool that sends syslog flows to Graylog2 through kombu
