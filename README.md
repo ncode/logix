@@ -25,7 +25,9 @@
 
 ## Depends:
 * python-kombu (>= 1.4.3)
-* python-gevent (>= 0.13.6), python-supay
+* python-gevent (>= 0.13.6) 
+* python-supay
+* syslog or rsyslog :D
 
 ## Todo
 * needs tweak on amqp pool
