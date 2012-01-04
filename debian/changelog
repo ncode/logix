@@ -1,3 +1,17 @@
+logix (0.1.3-3) stable; urgency=low
+
+  * commit 589ac8062d8b31e0edafaa077284a37023bee740
+  * Author: Juliano Martinez <juliano@falaserio.org>
+  * Date:   Wed Jan 4 17:35:43 2012 -0200
+  *   added postrm and fixed setuid
+
+  * commit fc7d9ed804ad1b8e80c777779d131b7ce8d50272
+  * Author: Juliano Martinez <juliano@falaserio.org>
+  * Date:   Wed Jan 4 17:30:10 2012 -0200
+  *   added setuid
+
+ -- Juliano Martinez <juliano.martinez@locaweb.com.br>  Wed, 04 Jan 2012 17:36:21 -0200
+
 logix (0.1.3-2) stable; urgency=low
 
   * commit 19add662c2fd1e45ef70cfe5f8322b7e01c36f87 
