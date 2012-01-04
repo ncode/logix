@@ -1,3 +1,12 @@
+logix (0.1.3-2) stable; urgency=low
+
+  * commit 19add662c2fd1e45ef70cfe5f8322b7e01c36f87 
+  * Author: Juliano Martinez <juliano@falaserio.org> 
+  * Date:   Wed Jan 4 17:23:43 2012 - 0200  
+  *   added rsyslog as dep, fixed init bug
+
+ -- Juliano Martinez <juliano.martinez@locaweb.com.br>  Wed, 04 Jan 2012 17:25:25 -0200
+
 logix (0.1.3-1) stable; urgency=low
 
   * commit 202761d106e75a9ecbc45838d8a4251c86079639
