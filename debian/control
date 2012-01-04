@@ -8,6 +8,6 @@ Homepage: https://github.com/locaweb/logix
 
 Package: logix
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, python-kombu (>= 1.4.3), python-gevent (>= 0.13.6), python-supay
+Depends: ${shlibs:Depends}, ${misc:Depends}, python-kombu (>= 1.4.3), python-gevent (>= 0.13.6), python-supay, rsyslog
 Description: Syslog to Graylog2 log sender
  Send your logs from Syslog to Graylog2 via AMQP
