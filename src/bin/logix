@@ -14,6 +14,7 @@ import time
 import gevent
 import logging
 import ConfigParser
+from gevent import socket
 from kombu import Exchange, Queue
 from kombu import BrokerConnection
 from kombu.common import maybe_declare
