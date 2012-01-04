@@ -73,4 +73,3 @@ if __name__ == '__main__':
         data, peer = s.recvfrom(config.getint('server', 'max_syslog_line_size') - 1)
         logging.debug("New data: %s" % data)
         gevent.spawn(parse_and_queue_datagram, data, peer, config.get('transport', 'queue'), connection)
-

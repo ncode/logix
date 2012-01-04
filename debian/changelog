@@ -1,3 +1,12 @@
+logix (0.1.3) stable; urgency=low
+
+  * commit 0555763be25801b42d45f76ab3f04d189b576a71
+  * Author: Juliano Martinez <juliano@falaserio.org>
+  * Date:   Wed Jan 4 16:29:56 2012 -0200
+  *   added sample rsyslog file
+
+ -- Juliano Martinez <juliano.martinez@locaweb.com.br>  Wed, 04 Jan 2012 16:31:00 -0200
+
 logix (0.1.2) stable; urgency=low
 
   * Initial Release.
