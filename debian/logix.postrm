@@ -1,0 +1,6 @@
+if [ "$1" = "purge" ] ; then
+	update-rc.d logix remove >/dev/null
+    userdel logix >/dev/null 2>&1 || true
+    groupdel logix >/dev/null 2>&1 || true
+    /etc/init.d/rsyslog start || exit $?
+fi

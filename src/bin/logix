@@ -55,7 +55,7 @@ def _calc_lvl(line):
     return (None, None, lvl[2])
 
 def main():
-    os.setuid(pwd.getpwnam('logix')[3])
+    os.setuid(pwd.getpwnam('logix')[2])
     logging.info("Starting Logix")
     config_file = '/etc/logix/logix.conf' if os.path.isfile('/etc/logix/logix.conf') else os.getenv('LOGIX_CONF')
     if not os.path.isfile(config_file):
