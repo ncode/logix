@@ -9,5 +9,5 @@ Homepage: https://github.com/locaweb/logix
 Package: logix
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, python-kombu (>= 1.4.3), python-gevent (>= 0.13.6), python-supay
-Description: Syslog to Graylog2 gelf enqueuer 
- Simple tool that sends syslog flows to Graylog2 through kombu
+Description: Syslog to Graylog2 log sender
+ Send your logs from Syslog to Graylog2 via AMQP

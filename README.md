@@ -1,4 +1,4 @@
-# Graylog Extended Log Format enqueuer through kombu for Graylog2
+# Logix - Send your logs from Syslog to Graylog2 via AMQP
 * http://graylog2.org/about
 
 ## Usage:
@@ -22,6 +22,10 @@
 ### Running: 
     $ LOGIX_CONF=src/etc/logix.conf src/bin/logix &
     $ logger test
+
+## Depends:
+* python-kombu (>= 1.4.3)
+* python-gevent (>= 0.13.6), python-supay
 
 ## Todo
 * needs tweak on amqp pool
