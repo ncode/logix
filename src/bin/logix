@@ -1,7 +1,22 @@
 #!/usr/bin/python
-
-# forked from Juliano Martinez (http://github.com/ncode/logix)
-# gevent based syslog/amqp(via kombu) bridge
+#
+# Copyright 2012 Juliano Martinez
+# All Rights Reserved.
+#
+#    Licensed under the Apache License, Version 2.0 (the "License");
+#    you may not use this file except in compliance with the License.
+#    You may obtain a copy of the License at
+#
+#        http://www.apache.org/licenses/LICENSE-2.0
+#
+#    Unless required by applicable law or agreed to in writing, software
+#    distributed under the License is distributed on an "AS IS" BASIS,
+#    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#    See the License for the specific language governing permissions and
+#    limitations under the License.
+#
+# @author: Juliano Martinez
+# @author: Gleicon Moraes
 
 from gevent import monkey
 monkey.patch_all()
@@ -25,8 +40,8 @@ from kombu.pools import producers, connections
 
 hostname = os.uname()[1]
 severity = ['emerg', 'alert', 'crit', 'err', 'warn', 'notice', 'info', 'debug']
-facility = ['kern', 'user', 'mail', 'daemon', 'auth', 'syslog', 'lpr', 'news', 'uucp', 
-            'cron', 'authpriv', 'ftp', 'ntp', 'audit', 'alert', 'at', 'local0', 'local1', 
+facility = ['kern', 'user', 'mail', 'daemon', 'auth', 'syslog', 'lpr', 'news', 'uucp',
+            'cron', 'authpriv', 'ftp', 'ntp', 'audit', 'alert', 'at', 'local0', 'local1',
             'local2', 'local3', 'local4', 'local5', 'local6', 'local7']
 
 fs_match = re.compile("<(.+)>([A-Z]{3} .*)", re.I)
@@ -65,8 +80,7 @@ def main():
     config = ConfigParser.RawConfigParser()
     config.read(config_file)
 
-    # config.getint('transport', 'connection_pool_size')
-    connection = BrokerConnection(config.get('transport','url')) 
+    connection = BrokerConnection(config.get('transport','url'))
     connection.connect()
 
     s = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM, proto=socket.IPPROTO_UDP)
@@ -96,3 +110,5 @@ if __name__ == '__main__':
         daemon.status()
     elif action == 'stop':
         daemon.stop()
+    elif action == 'foreground':
+        main()
