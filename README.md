@@ -15,7 +15,7 @@ losses caused by udp and any performance issue that could be caused by
 concurrency using tcp remote syslog.
 
 logix queues your log events on any AMQP Server and you can easy setup
-your greylog2 server to consume this queue and index your logs on demand.
+your <a href="https://github.com/Graylog2/graylog2-server">greylog2-server</a> to consume this queue and index your logs on demand.
 
 ## Usage:
 ### Setup your AMQP and Graylog2
