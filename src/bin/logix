@@ -102,7 +102,7 @@ if __name__ == '__main__':
         if o in ('-a', '--action'):
             action = a
 
-    daemon = Daemon(name='loggix', catch_all_log="/var/log/logix.log")
+    daemon = Daemon(name='logix', catch_all_log="/var/log/logix.log")
     if action == 'start':
         daemon.start()
         main()
