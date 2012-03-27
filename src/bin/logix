@@ -72,8 +72,7 @@ def _calc_lvl(line):
 def main(user):
     os.setuid(pwd.getpwnam(user)[2])
     logging.info("Starting Logix")
-    config_file = '/etc/logix/logix.conf'
-            if os.path.isfile('/etc/logix/logix.conf') else os.getenv('LOGIX_CONF')
+    config_file = '/etc/logix/logix.conf' if os.path.isfile('/etc/logix/logix.conf') else os.getenv('LOGIX_CONF')
     if not os.path.isfile(config_file):
         logging.error("Config file %s not found" % config_file)
         sys.exit(1)
