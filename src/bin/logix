@@ -44,7 +44,7 @@ facility = ['kern', 'user', 'mail', 'daemon', 'auth', 'syslog', 'lpr', 'news', '
             'cron', 'authpriv', 'ftp', 'ntp', 'audit', 'alert', 'at', 'local0', 'local1',
             'local2', 'local3', 'local4', 'local5', 'local6', 'local7']
 
-fs_match = re.compile("<(.+)>([A-Z]{3} .*)", re.I)
+fs_match = re.compile("^<(.+?)>([A-Z]{3} .*)", re.I)
 
 def parse_and_queue_datagram(line, host, queue, connection):
     parsed = {}
@@ -69,10 +69,11 @@ def _calc_lvl(line):
         return (facility[fac].capitalize(), sev, lvl[2])
     return (None, None, lvl[2])
 
-def main():
-    os.setuid(pwd.getpwnam('logix')[2])
+def main(user):
+    os.setuid(pwd.getpwnam(user)[2])
     logging.info("Starting Logix")
-    config_file = '/etc/logix/logix.conf' if os.path.isfile('/etc/logix/logix.conf') else os.getenv('LOGIX_CONF')
+    config_file = '/etc/logix/logix.conf'
+            if os.path.isfile('/etc/logix/logix.conf') else os.getenv('LOGIX_CONF')
     if not os.path.isfile(config_file):
         logging.error("Config file %s not found" % config_file)
         sys.exit(1)
@@ -93,22 +94,25 @@ def main():
 
 if __name__ == '__main__':
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "a:", ["action="])
+        opts, args = getopt.getopt(sys.argv[1:], "a:u:", ["action=","user="])
     except getopt.GetoptError, err:
         print str(err)
 
+    user = 'logix'
     action = 'start'
     for o, a in opts:
         if o in ('-a', '--action'):
             action = a
+        elif o in ('-u', '--user'):
+            user = a
 
     daemon = Daemon(name='logix', catch_all_log="/var/log/logix.log")
     if action == 'start':
         daemon.start()
-        main()
+        main(user)
     elif action == 'status':
         daemon.status()
     elif action == 'stop':
         daemon.stop()
     elif action == 'foreground':
-        main()
+        main(user)
