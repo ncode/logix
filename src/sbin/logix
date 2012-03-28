@@ -25,7 +25,6 @@ import os
 import re
 import pwd
 import sys
-import math
 import time
 import gevent
 import getopt
@@ -64,8 +63,8 @@ def _calc_lvl(line):
     lvl = fs_match.split(line)
     if lvl and len(lvl) > 1:
         i = int(lvl[1])
-        fac = int(math.floor(i / 8))
-        sev = i - (fac * 8)
+        fac = i / 8
+        sev = i % 8
         return (facility[fac].capitalize(), sev, lvl[2])
     return (None, None, lvl[2])
 

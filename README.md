@@ -36,7 +36,7 @@ your <a href="https://github.com/Graylog2/graylog2-server">greylog2-server</a> t
     $ /etc/init.d/rsyslog restart
 
 ### Running:
-    $ LOGIX_CONF=src/etc/logix.conf src/bin/logix &
+    $ LOGIX_CONF=src/etc/logix.conf src/bin/logix -u $USER &
     $ logger test
 
 ## Depends:
