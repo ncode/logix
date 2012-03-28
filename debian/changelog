@@ -1,19 +1,28 @@
+logix (0.1.3-5) stable; urgency=low
+
+  * commit 0d777d22f8df120eadaa83d04fb3ce4f8bfb3493
+  * Author: Juliano Martinez <juliano@falaserio.org>
+  * Date:   Wed Mar 28 13:52:31 2012 -0300
+  *   updated sev calc to use mod
+
+ -- Juliano Martinez <juliano.martinez@locaweb.com.br>  Wed, 28 Mar 2012 14:32:53 -0300
+
 logix (0.1.3-4) stable; urgency=low
 
-    * commit aa4cda7039c24a3b38334c8f7dcb08be66f2277c
-    * Author: Juliano Martinez <juliano@falaserio.org>
-    * Date:   Tue Mar 27 17:19:41 2012 -0300
-    *   moved source from bin to sbin
+  * commit aa4cda7039c24a3b38334c8f7dcb08be66f2277c
+  * Author: Juliano Martinez <juliano@falaserio.org>
+  * Date:   Tue Mar 27 17:19:41 2012 -0300
+  *   moved source from bin to sbin
 
-    * commit 284b13b08ad1c221ace2bd177adcbcd8a12fcf2d
-    * Author: Juliano Martinez <juliano@falaserio.org>
-    * Date:   Tue Mar 27 17:18:32 2012 -0300
-    *   fixed IndentationError:
+  * commit 284b13b08ad1c221ace2bd177adcbcd8a12fcf2d
+  * Author: Juliano Martinez <juliano@falaserio.org>
+  * Date:   Tue Mar 27 17:18:32 2012 -0300
+  *   fixed IndentationError:
 
-    * commit 2ce400bdee55521ea9460f6448d729611a425b6c
-    * Author: Juliano Martinez <juliano@falaserio.org>
-    * Date:   Tue Mar 27 17:16:16 2012 -0300
-    *   fixed regex issue
+  * commit 2ce400bdee55521ea9460f6448d729611a425b6c
+  * Author: Juliano Martinez <juliano@falaserio.org>
+  * Date:   Tue Mar 27 17:16:16 2012 -0300
+  *   fixed regex issue
 
  -- Juliano Martinez <juliano.martinez@locaweb.com.br>  Tue, 27 Mar 2012 17:49:45 -0300
 
