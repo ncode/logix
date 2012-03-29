@@ -82,14 +82,13 @@ def main(user):
     pool_size = config.getint('transport','connection_pool_size')
     connection = BrokerConnection(config.get('transport','url'))
     connection.Pool(pool_size, pool_size / 5)
+    connection.ensure_connection()
     connection.connect()
 
     s = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM, proto=socket.IPPROTO_UDP)
     s.bind(('',config.getint('server', 'port')))
 
     while True:
-        if not connection.connected:
-            connection.connect()
         data, peer = s.recvfrom(config.getint('server', 'max_syslog_line_size') - 1)
         logging.debug("New data: %s" % data)
         gevent.spawn(parse_and_queue_datagram, data, peer, config.get('transport', 'queue'), connection)

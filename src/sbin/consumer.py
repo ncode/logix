@@ -15,7 +15,7 @@ config = ConfigParser.RawConfigParser()
 config.read(config_file)
 
 with BrokerConnection(config.get('transport','url')) as conn:
-    with conn.SimpleQueue(config.get('transport', 'queue'), serializer="json", as queue:
+    with conn.SimpleQueue(config.get('transport', 'queue'), serializer="json") as queue:
         message = queue.get(block=True, timeout=10)
         if message:
             print message.payload
