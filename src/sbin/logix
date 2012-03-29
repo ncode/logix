@@ -88,14 +88,17 @@ def main(user):
     s = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM, proto=socket.IPPROTO_UDP)
     s.bind(('',config.getint('server', 'port')))
 
+    queue = config.get('transport', 'queue')
+    max_syslog_line_size = config.getint('server', 'max_syslog_line_size')
     while True:
-        data, peer = s.recvfrom(config.getint('server', 'max_syslog_line_size') - 1)
-        logging.debug("New data: %s" % data)
-        gevent.spawn(parse_and_queue_datagram, data, peer, config.get('transport', 'queue'), connection)
+        data, peer = s.recvfrom(max_syslog_line_size - 1)
+        if debug:
+            print "New data: %s" % data
+        gevent.spawn(parse_and_queue_datagram, data, peer, queue, connection)
 
 if __name__ == '__main__':
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "a:u:", ["action=","user="])
+        opts, args = getopt.getopt(sys.argv[1:], "a:u:dh", ["action=","user="])
     except getopt.GetoptError, err:
         print str(err)
 
@@ -106,6 +109,15 @@ if __name__ == '__main__':
             action = a
         elif o in ('-u', '--user'):
             user = a
+        elif o in ('-d'):
+            debug = True
+        elif o in ('-h'):
+            print "Usage: %s" % sys.argv[0]
+            print " -h help"
+            print " -u username"
+            print " -d debug (When used in daemon mode will write to log)"
+            print " -a <start|stop|status|foreground>"
+            sys.exit(1)
 
     daemon = Daemon(name='logix', catch_all_log="/var/log/logix.log")
     if action == 'start':
