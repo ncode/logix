@@ -79,7 +79,9 @@ def main(user):
     config = ConfigParser.RawConfigParser()
     config.read(config_file)
 
+    pool_size = config.getint('transport','connection_pool_size')
     connection = BrokerConnection(config.get('transport','url'))
+    connection.Pool(pool_size, pool_size / 5)
     connection.connect()
 
     s = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM, proto=socket.IPPROTO_UDP)
