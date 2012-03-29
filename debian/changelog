@@ -1,3 +1,12 @@
+logix (0.1.3-6) stable; urgency=low
+
+  * commit c5363c9c2a97fa3899ee541e68208e95dd2bf937
+  * Author: Juliano Martinez <juliano@falaserio.org>
+  * Date:   Thu Mar 29 15:27:18 2012 -0300
+  *   added reconnection without restart - issue #5
+
+ -- Juliano Martinez <juliano.martinez@locaweb.com.br>  Thu, 29 Mar 2012 15:33:13 -0300
+
 logix (0.1.3-5) stable; urgency=low
 
   * commit 0d777d22f8df120eadaa83d04fb3ce4f8bfb3493
