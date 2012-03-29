@@ -25,18 +25,25 @@ your <a href="https://github.com/Graylog2/graylog2-server">greylog2-server</a> t
 ### on MacOS X:
 
     $ vim /etc/syslog.conf
-    *.notice;authpriv,remoteauth,ftp,install,internal.none  @127.0.0.1:8000
+    *.notice;authpriv,remoteauth,ftp,install,internal.none  @127.0.0.1:6660
     $ launchctl unload /System/Library/LaunchDaemons/com.apple.syslogd.plist
     $ launchctl load /System/Library/LaunchDaemons/com.apple.syslogd.plist
 
 ### on Linux:
 
     $ vim /etc/rsyslog.d/logix.conf
-    *.*  @127.0.0.1:8000
+    *.*  @127.0.0.1:6660
     $ /etc/init.d/rsyslog restart
 
 ### Running:
-    $ LOGIX_CONF=src/etc/logix.conf src/bin/logix -u $USER &
+
+    $ Usage: ./logix
+    $   -h help
+    $   -u username
+    $   -d debug
+    $   -a <start|stop|status|foreground>
+
+    $ LOGIX_CONF=src/etc/logix.conf src/bin/logix -u $USER -a foreground -d &
     $ logger test
 
 ## Depends:

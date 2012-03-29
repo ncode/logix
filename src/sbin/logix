@@ -115,7 +115,7 @@ if __name__ == '__main__':
             print "Usage: %s" % sys.argv[0]
             print " -h help"
             print " -u username"
-            print " -d debug (When used in daemon mode will write to log)"
+            print " -d debug"
             print " -a <start|stop|status|foreground>"
             sys.exit(1)
 
