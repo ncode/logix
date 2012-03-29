@@ -46,5 +46,4 @@ your <a href="https://github.com/Graylog2/graylog2-server">greylog2-server</a> t
 * syslog or rsyslog :D
 
 ## Todo
-* needs tweak on amqp pool
 * would benefit of an internal backlog queue
