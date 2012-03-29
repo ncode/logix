@@ -1,3 +1,22 @@
+logix (0.1.3-7) stable; urgency=low
+
+  * commit b191fcff64cab0f41425f8ae280b9c812cacc5d4
+  * Author: Juliano Martinez <juliano@falaserio.org>
+  * Date:   Thu Mar 29 16:48:13 2012 -0300
+  *   Using ensure_connection insted of verify each try manually
+
+  * commit cb6b512ecd401044afe1bbfb28b59ce3db124fbd
+  * Author: Juliano Martinez <juliano@falaserio.org>
+  * Date:   Thu Mar 29 16:33:18 2012 -0300
+  *   amqp pool GG
+
+  * commit aadac3d755b991be0dc60da530c3f6c6a9b003de
+  * Author: Juliano Martinez <juliano@falaserio.org>
+  * Date:   Thu Mar 29 16:30:20 2012 -0300
+  *   playing with connection pool
+
+ -- Juliano Martinez <juliano.martinez@locaweb.com.br>  Thu, 29 Mar 2012 16:55:22 -0300
+
 logix (0.1.3-6) stable; urgency=low
 
   * commit c5363c9c2a97fa3899ee541e68208e95dd2bf937
