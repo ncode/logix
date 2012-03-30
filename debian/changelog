@@ -1,3 +1,12 @@
+logix (0.1.3-9) stable; urgency=low
+
+  * commit 91ed7f63974a670997da255cddb57211d56dd41b
+  * Author: Juliano Martinez <juliano@falaserio.org>
+  * Date:   Fri Mar 30 13:53:49 2012 -0300
+  *   added missing debug global
+
+ -- Juliano Martinez <juliano.martinez@locaweb.com.br>  Fri, 30 Mar 2012 13:54:40 -0300
+
 logix (0.1.3-8) stable; urgency=low
 
   * commit cf3dacbdffac93223adf79be5f084c0c7697896d
