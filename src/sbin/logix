@@ -37,6 +37,7 @@ from kombu import BrokerConnection
 from kombu.common import maybe_declare
 from kombu.pools import producers, connections
 
+debug = False
 hostname = os.uname()[1]
 severity = ['emerg', 'alert', 'crit', 'err', 'warn', 'notice', 'info', 'debug']
 facility = ['kern', 'user', 'mail', 'daemon', 'auth', 'syslog', 'lpr', 'news', 'uucp',
