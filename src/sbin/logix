@@ -80,9 +80,10 @@ def main(user):
     config = ConfigParser.RawConfigParser()
     config.read(config_file)
 
-    pool_size = config.getint('transport','connection_pool_size')
     connection = BrokerConnection(config.get('transport','url'))
-    connection.Pool(pool_size, pool_size / 5)
+    if config.getboolean('transport','connection_pool_enabled'):
+        pool_size = config.getint('transport','connection_pool_size')
+        connection.Pool(pool_size, pool_size / 5)
     connection.ensure_connection()
     connection.connect()
 
@@ -97,11 +98,19 @@ def main(user):
             print "New data: %s" % data
         gevent.spawn(parse_and_queue_datagram, data, peer, queue, connection)
 
+def help():
+    print "Usage: %s" % sys.argv[0]
+    print " -h help"
+    print " -u username"
+    print " -d debug"
+    print " -a <start|stop|status|foreground>"
+    sys.exit(1)
+
 if __name__ == '__main__':
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "a:u:dh", ["action=","user="])
+        opts, args = getopt.getopt(sys.argv[1:], "a:u:d", ["action=","user="])
     except getopt.GetoptError, err:
-        print str(err)
+        help()
 
     user = 'logix'
     action = 'start'
@@ -112,13 +121,8 @@ if __name__ == '__main__':
             user = a
         elif o in ('-d'):
             debug = True
-        elif o in ('-h'):
-            print "Usage: %s" % sys.argv[0]
-            print " -h help"
-            print " -u username"
-            print " -d debug"
-            print " -a <start|stop|status|foreground>"
-            sys.exit(1)
+        else:
+            help()
 
     daemon = Daemon(name='logix', catch_all_log="/var/log/logix.log")
     if action == 'start':
