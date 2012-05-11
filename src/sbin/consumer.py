@@ -19,5 +19,5 @@ with BrokerConnection(config.get('transport','url')) as conn:
         message = queue.get(block=True, timeout=10)
         if message:
             print message.payload
-            message.ack()
+#            message.ack()
 

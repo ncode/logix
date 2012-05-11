@@ -35,7 +35,7 @@ from gevent import socket
 from kombu import Exchange, Queue
 from kombu import BrokerConnection
 from kombu.common import maybe_declare
-from kombu.pools import producers, connections
+from kombu.pools import producers, connections, reset
 
 debug = False
 hostname = os.uname()[1]
@@ -56,9 +56,13 @@ def parse_and_queue_datagram(line, host, queue, connection):
     parsed['version'] = '1.0'
     parsed['short_message'] = "%s" % (parsed['line'])
 
-    with connections[connection].acquire(block=True) as conn:
-        with conn.SimpleQueue(queue) as queue:
-            queue.put(parsed, serializer="json")
+    try:
+        with connections[connection].acquire(block=True, timeout=10) as conn:
+            with conn.SimpleQueue(queue) as queue:
+                queue.put(parsed, serializer="json")
+    except Exception, e:
+        print "Exception: %s" % e
+        connection.close()
 
 def _calc_lvl(line):
     lvl = fs_match.split(line)
@@ -93,10 +97,17 @@ def main(user):
     queue = config.get('transport', 'queue')
     max_syslog_line_size = config.getint('server', 'max_syslog_line_size')
     while True:
-        data, peer = s.recvfrom(max_syslog_line_size - 1)
-        if debug:
-            print "New data: %s" % data
-        gevent.spawn(parse_and_queue_datagram, data, peer, queue, connection)
+        try:
+            data, peer = s.recvfrom(max_syslog_line_size - 1)
+            if debug:
+                print "Received new data: %s" % data
+            gevent.spawn(parse_and_queue_datagram, data, peer, queue, connection)
+            if not connection.connected:
+                time.sleep(5)
+                reset()
+                connection.connect()
+        except socket.error:
+            print "Connection refused at broker, retrying"
 
 def help():
     print "Usage: %s" % sys.argv[0]
