@@ -1,4 +1,7 @@
 #!/bin/bash
+
+set -e
+
 chgrp logix /etc/logix/logix.conf 2>/dev/null || addgroup --system logix
 chown logix /etc/logix/logix.conf 2>/dev/null || adduser --system --disabled-login --home /var/run/logix --no-create-home --disabled-password --ingroup logix logix
 
