@@ -96,14 +96,17 @@ def main(user):
 
     queue = config.get('transport', 'queue')
     max_syslog_line_size = config.getint('server', 'max_syslog_line_size')
+    greenlets = []
     while True:
         try:
             data, peer = s.recvfrom(max_syslog_line_size - 1)
             if debug:
                 print "Received new data: %s" % data
-            gevent.spawn(parse_and_queue_datagram, data, peer, queue, connection)
+            greenlets.append(gevent.spawn(parse_and_queue_datagram, data, peer, queue, connection))
             if not connection.connected:
                 time.sleep(5)
+                gevent.killall(greenlets)
+                greenlets = []
                 reset()
                 connection.connect()
         except socket.error:

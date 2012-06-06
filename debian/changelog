@@ -1,3 +1,12 @@
+logix (0.1.3-11) stable; urgency=low
+
+  * commit eacb031769cda61f3059398c4cc284ad96f0543f
+  * Author: Juliano Martinez <juliano@falaserio.org>
+  * Date:   Fri May 11 19:20:20 2012 -0300
+  *   fixed kombu buggy connection
+
+ -- Juliano Martinez <juliano.martinez@locaweb.com.br>  Fri, 11 May 2012 19:21:04 -0300
+
 logix (0.1.3-10) stable; urgency=low
 
   * commit 2cf64927ab42f6279d318146c95298ea037c8b0c
