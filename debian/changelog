@@ -1,3 +1,12 @@
+logix (0.1.3-13) stable; urgency=low
+
+  * commit b1821bb6d5a0709860e9ee8fa09b761aa260ed62
+  * Author: Juliano Martinez <juliano.martinez@locaweb.com.br>
+  * Date:   Wed Jun 6 15:59:10 2012 -0300
+  *   Added some output about error with zombies
+
+ -- Juliano Martinez <juliano.martinez@locaweb.com.br>  Wed, 06 Jun 2012 15:59:49 -0300
+
 logix (0.1.3-12) stable; urgency=low
 
   * commit a08f360bc0d4b4779ff0fcf5b97daaec363057e7
