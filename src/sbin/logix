@@ -105,8 +105,12 @@ def main(user):
             greenlets.append(gevent.spawn(parse_and_queue_datagram, data, peer, queue, connection))
             if not connection.connected:
                 time.sleep(5)
-                gevent.killall(greenlets)
-                greenlets = []
+                try:
+                    gevent.killall(greenlets)
+                except Exception, e:
+                    print "Got exception %s" % e
+                finally:
+                    greenlets = []
                 reset()
                 connection.connect()
         except socket.error:
