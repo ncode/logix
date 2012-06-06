@@ -108,7 +108,7 @@ def main(user):
                 try:
                     gevent.killall(greenlets)
                 except Exception, e:
-                    print "Got exception %s" % e
+                    print "Got exception %s killing greenlets" % e
                 finally:
                     greenlets = []
                 reset()
