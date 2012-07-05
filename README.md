@@ -22,6 +22,17 @@ your <a href="https://github.com/Graylog2/graylog2-server">graylog2-server</a> t
 * http://www.rabbitmq.com/getstarted.html
 * https://github.com/Graylog2/graylog2-server/wiki/AMQP
 
+### Add to you grailog2.conf
+
+    # AMQP
+    amqp_enabled = true
+    amqp_subscribed_queues = logix:gelf
+    amqp_host = localhost
+    amqp_port = 5672
+    amqp_username = guest
+    amqp_password = guest
+    amqp_virtualhost = /
+
 ### on MacOS X:
 
     $ vim /etc/syslog.conf
