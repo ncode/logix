@@ -1,3 +1,28 @@
+logix (0.1.4-1) testing; urgency=low
+
+  * commit d30c08f4152c191801d6a4a4928ee87ab9ee8970
+  * Author: ncode <juliano@martinez.io>
+  * Date:   Thu Jul 5 14:20:07 2012 +0000
+  *   updated README.md
+
+  * commit 49803054567751ac6b392cccbf0ddda66d6d875e
+  * Author: ncode <juliano@martinez.io>
+  * Date:   Thu Jul 5 13:56:50 2012 +0000
+  *   cleaning code and start follow pep8
+
+  * commit 49f264f6ec3e40600dcabeaf1b32d1fc1b550c5f
+  * Author: ncode <juliano@martinez.io>
+  * Date:   Thu Jul 5 10:15:52 2012 -0300
+  *   Changed connection pool to False by default
+  *   most environments wont need it
+
+  * commit 86dbde6541560ade44f7eb330a185848455bde95
+  * Author: ncode <juliano@martinez.io>
+  * Date:   Thu Jul 5 10:08:32 2012 -0300
+  *   Updated README.md
+
+ -- Juliano Martinez <juliano.martinez@locaweb.com.br>  Thu, 05 Jul 2012 14:21:02 +0000
+
 logix (0.1.3-13) stable; urgency=low
 
   * commit b1821bb6d5a0709860e9ee8fa09b761aa260ed62
