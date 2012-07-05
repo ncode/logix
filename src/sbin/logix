@@ -40,11 +40,13 @@ from kombu.pools import producers, connections, reset
 debug = False
 hostname = os.uname()[1]
 severity = ['emerg', 'alert', 'crit', 'err', 'warn', 'notice', 'info', 'debug']
-facility = ['kern', 'user', 'mail', 'daemon', 'auth', 'syslog', 'lpr', 'news', 'uucp',
-            'cron', 'authpriv', 'ftp', 'ntp', 'audit', 'alert', 'at', 'local0', 'local1',
-            'local2', 'local3', 'local4', 'local5', 'local6', 'local7']
+facility = ['kern', 'user', 'mail', 'daemon', 'auth', 'syslog', 'lpr',
+            'news', 'uucp', 'cron', 'authpriv', 'ftp', 'ntp', 'audit',
+            'alert', 'at', 'local0', 'local1', 'local2', 'local3',
+            'local4', 'local5', 'local6', 'local7']
 
 fs_match = re.compile("^<(.+?)>([A-Z]{3} .*)", re.I)
+
 
 def parse_and_queue_datagram(line, host, queue, connection):
     parsed = {}
@@ -64,6 +66,7 @@ def parse_and_queue_datagram(line, host, queue, connection):
         print "Exception: %s" % e
         connection.close()
 
+
 def _calc_lvl(line):
     lvl = fs_match.split(line)
     if lvl and len(lvl) > 1:
@@ -73,48 +76,35 @@ def _calc_lvl(line):
         return (facility[fac].capitalize(), sev, lvl[2])
     return (None, None, lvl[2])
 
-def main(user):
-    os.setuid(pwd.getpwnam(user)[2])
-    logging.info("Starting Logix")
-    config_file = '/etc/logix/logix.conf' if os.path.isfile('/etc/logix/logix.conf') else os.getenv('LOGIX_CONF')
-    if not os.path.isfile(config_file):
-        logging.error("Config file %s not found" % config_file)
-        sys.exit(1)
 
-    config = ConfigParser.RawConfigParser()
-    config.read(config_file)
+def clean_greenlets(greenlets):
+    time.sleep(2)
+    try:
+        gevent.killall(greenlets)
+    except Exception, e:
+        print "Got exception %s killing greenlets" % e
+    finally:
+        return []
 
-    connection = BrokerConnection(config.get('transport','url'))
-    if config.getboolean('transport','connection_pool_enabled'):
-        pool_size = config.getint('transport','connection_pool_size')
+
+def prepare_server(config):
+    connection = BrokerConnection(config.get('transport', 'url'))
+    if config.getboolean('transport', 'connection_pool_enabled'):
+        pool_size = config.getint('transport', 'connection_pool_size')
         connection.Pool(pool_size, pool_size / 5)
     connection.ensure_connection()
     connection.connect()
 
-    s = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM, proto=socket.IPPROTO_UDP)
-    s.bind(('',config.getint('server', 'port')))
+    server = socket.socket(
+        family=socket.AF_INET,
+        type=socket.SOCK_DGRAM,
+        proto=socket.IPPROTO_UDP
+    )
+    server.bind((config.get('server', 'bind_addr'),
+                 config.getint('server', 'port')))
 
-    queue = config.get('transport', 'queue')
-    max_syslog_line_size = config.getint('server', 'max_syslog_line_size')
-    greenlets = []
-    while True:
-        try:
-            data, peer = s.recvfrom(max_syslog_line_size - 1)
-            if debug:
-                print "Received new data: %s" % data
-            greenlets.append(gevent.spawn(parse_and_queue_datagram, data, peer, queue, connection))
-            if not connection.connected:
-                time.sleep(5)
-                try:
-                    gevent.killall(greenlets)
-                except Exception, e:
-                    print "Got exception %s killing greenlets" % e
-                finally:
-                    greenlets = []
-                reset()
-                connection.connect()
-        except socket.error:
-            print "Connection refused at broker, retrying"
+    return (connection, server)
+
 
 def help():
     print "Usage: %s" % sys.argv[0]
@@ -124,9 +114,44 @@ def help():
     print " -a <start|stop|status|foreground>"
     sys.exit(1)
 
+
+def main(user):
+    os.setuid(pwd.getpwnam(user)[2])
+    logging.info("Starting Logix")
+    config_file = '/etc/logix/logix.conf' if os.path.isfile(
+        '/etc/logix/logix.conf'
+    ) else os.getenv('LOGIX_CONF')
+    if not os.path.isfile(config_file):
+        logging.error("Config file %s not found" % config_file)
+        sys.exit(1)
+
+    config = ConfigParser.RawConfigParser()
+    config.read(config_file)
+
+    connection, server = prepare_server(config)
+    queue = config.get('transport', 'queue')
+    max_syslog_line_size = config.getint('server', 'max_syslog_line_size')
+    greenlets = []
+    while True:
+        try:
+            data, peer = s.recvfrom(max_syslog_line_size - 1)
+            if debug:
+                print "Received new data: %s" % data
+            greenlets.append(gevent.spawn(
+                parse_and_queue_datagram, data,
+                peer, queue, connection
+            ))
+            if not connection.connected:
+                greenlets = clean(greenlets)
+                reset()
+                connection.connect()
+        except socket.error:
+            print "Connection refused at broker, retrying"
+
+
 if __name__ == '__main__':
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "a:u:d", ["action=","user="])
+        opts, args = getopt.getopt(sys.argv[1:], "a:u:d", ["action=", "user="])
     except getopt.GetoptError, err:
         help()
 
