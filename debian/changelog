@@ -1,3 +1,9 @@
+logix (0.1.4-2) stable; urgency=low
+
+  * Promoted to stable
+
+ -- Juliano Martinez <juliano.martinez@locaweb.com.br>  Wed, 11 Jul 2012 19:15:46 +0000
+
 logix (0.1.4-1) testing; urgency=low
 
   * commit d30c08f4152c191801d6a4a4928ee87ab9ee8970
