@@ -134,7 +134,7 @@ def main(user):
     greenlets = []
     while True:
         try:
-            data, peer = s.recvfrom(max_syslog_line_size - 1)
+            data, peer = server.recvfrom(max_syslog_line_size - 1)
             if debug:
                 print "Received new data: %s" % data
             greenlets.append(gevent.spawn(
