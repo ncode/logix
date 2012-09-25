@@ -142,7 +142,7 @@ def main(user):
                 peer, queue, connection
             ))
             if not connection.connected:
-                greenlets = clean(greenlets)
+                greenlets = clean_greenlets(greenlets)
                 reset()
                 connection.connect()
         except socket.error:
