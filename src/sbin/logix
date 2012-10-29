@@ -134,6 +134,11 @@ def main(user):
     greenlets = []
     while True:
         try:
+            if not connection.connected:
+                greenlets = clean_greenlets(greenlets)
+                reset()
+                connection.connect()
+
             data, peer = server.recvfrom(max_syslog_line_size - 1)
             if debug:
                 print "Received new data: %s" % data
@@ -141,10 +146,6 @@ def main(user):
                 parse_and_queue_datagram, data,
                 peer, queue, connection
             ))
-            if not connection.connected:
-                greenlets = clean_greenlets(greenlets)
-                reset()
-                connection.connect()
         except socket.error:
             print "Connection refused at broker, retrying"
 
