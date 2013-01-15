@@ -24,7 +24,7 @@ your <a href="https://github.com/Graylog2/graylog2-server">graylog2-server</a> t
 * http://www.rabbitmq.com/getstarted.html
 * https://github.com/Graylog2/graylog2-server/wiki/AMQP
 
-### Add to your grailog2.conf
+### Add to your graylog2.conf
 
     # AMQP
     amqp_enabled = true
