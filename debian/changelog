@@ -1,3 +1,13 @@
+logix (0.1.4-5) stable; urgency=low
+
+  * commit 280d8faba1e5b3ffff8eb746981ab7cb23bd7ceb
+  * Author: Juliano Martinez <juliano.martinez@locaweb.com.br>
+  * Date:   Tue Jan 22 14:39:53 2013 -0200
+  *   Fixing issues #9 -> Logix consume too many RAM with time
+  *   Fixing issues #10 -> Reconnection instead of crashing
+
+ -- Juliano Martinez <juliano.martinez@locaweb.com.br>  Tue, 22 Jan 2013 14:45:56 -0200
+
 logix (0.1.4-3) stable; urgency=low
 
   * Fixed server.recv_from

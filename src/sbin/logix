@@ -134,7 +134,7 @@ def main(user):
     greenlets = []
     while True:
         try:
-            if not connection.connected or (len(greenlets) > 10000):
+            if not connection.connected or (len(greenlets) >= 10000):
                 greenlets = clean_greenlets(greenlets)
                 reset()
                 connection.connect()
