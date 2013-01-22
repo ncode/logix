@@ -1,3 +1,12 @@
+logix (0.1.4-6) stable; urgency=low
+
+  * commit 851160aa6619cee928e92047d9d2c77e7bca094a
+  * Author: Juliano Martinez <juliano.martinez@locaweb.com.br>
+  * Date:   Tue Jan 22 15:06:35 2013 -0200
+  *   added clean_after
+
+ -- Juliano Martinez <juliano.martinez@locaweb.com.br>  Tue, 22 Jan 2013 15:06:54 -0200
+
 logix (0.1.4-5) stable; urgency=low
 
   * commit 280d8faba1e5b3ffff8eb746981ab7cb23bd7ceb
