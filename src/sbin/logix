@@ -131,10 +131,11 @@ def main(user):
     connection, server = prepare_server(config)
     queue = config.get('transport', 'queue')
     max_syslog_line_size = config.getint('server', 'max_syslog_line_size')
+    clean_after = config.get('transport', 'clean_after')
     greenlets = []
     while True:
         try:
-            if not connection.connected or (len(greenlets) >= 10000):
+            if not connection.connected or (len(greenlets) >= clean_after):
                 greenlets = clean_greenlets(greenlets)
                 reset()
                 connection.connect()
