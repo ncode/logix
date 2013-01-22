@@ -131,7 +131,7 @@ def main(user):
     connection, server = prepare_server(config)
     queue = config.get('transport', 'queue')
     max_syslog_line_size = config.getint('server', 'max_syslog_line_size')
-    clean_after = config.get('transport', 'clean_after')
+    clean_after = config.getint('transport', 'clean_after')
     greenlets = []
     while True:
         try:
@@ -150,9 +150,9 @@ def main(user):
         except socket.error:
             print "Connection refused at broker, retrying"
         except socket.timeout:
-            print "Connection timeout at broker, retrying"
+            print "Connection timeout with broker, retrying"
         except Exception as e:
-            print "unknown error %s" % str(e)
+            print "Unknown error %s, retrying" % str(e)
 
 
 if __name__ == '__main__':
