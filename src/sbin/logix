@@ -134,7 +134,7 @@ def main(user):
     greenlets = []
     while True:
         try:
-            if not connection.connected:
+            if not connection.connected or (len(greenlets) > 10000):
                 greenlets = clean_greenlets(greenlets)
                 reset()
                 connection.connect()
@@ -148,6 +148,10 @@ def main(user):
             ))
         except socket.error:
             print "Connection refused at broker, retrying"
+        except socket.timeout:
+            print "Connection timeout at broker, retrying"
+        except Exception as e:
+            print "unknown error %s" % str(e)
 
 
 if __name__ == '__main__':
