@@ -60,7 +60,7 @@ def parse_and_queue_datagram(line, host, queue, connection):
 
     try:
         with connections[connection].acquire(block=True, timeout=10) as conn:
-            with conn.SimpleQueue(queue) as queue:
+            with conn.SimpleQueue(queue, queue_opts = { "queue_arguments": {"x-message-ttl": 1800000}}) as queue:
                 queue.put(parsed, serializer="json")
     except Exception, e:
         print "Exception: %s" % e
