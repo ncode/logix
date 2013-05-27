@@ -60,7 +60,7 @@ def parse_and_queue_datagram(line, host, queue, connection):
 
     try:
         with connections[connection].acquire(block=True, timeout=10) as conn:
-            with conn.SimpleQueue(queue, queue_opts = { "queue_arguments": {"x-message-ttl": 1800000}}) as queue:
+            with conn.SimpleQueue(queue, queue_opts = { "queue_arguments": {"x-message-ttl": message_ttl}}) as queue:
                 queue.put(parsed, serializer="json")
     except Exception, e:
         print "Exception: %s" % e
@@ -132,6 +132,8 @@ def main(user):
     queue = config.get('transport', 'queue')
     max_syslog_line_size = config.getint('server', 'max_syslog_line_size')
     clean_after = config.getint('transport', 'clean_after')
+    global message_ttl
+    message_ttl = config.getint('transport', 'message_ttl')
     greenlets = []
     while True:
         try:
